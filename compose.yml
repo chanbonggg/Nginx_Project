@@ -27,10 +27,10 @@ services:
   
   backend:
     build:
-      context: ./backend
-    container_name: week02-backend
+      context: ./spring-backend
+    container_name: spring-backend
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
       - postgres
       - redis

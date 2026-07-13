@@ -928,3 +928,39 @@ const data = await response.json();
 - frontend에서 backend를 직접 `localhost:8000`으로 호출하지 않는다.
 - `/api/health` 같은 상대 경로를 사용하면 Nginx를 통해 backend로 요청이 전달된다.
 - 이 구조는 나중에 배포할 때도 frontend 코드 변경을 줄여준다.
+
+
+## Backend Spring Boot 전환
+
+기존 FastAPI backend를 Spring Boot backend로 교체했다.
+
+### 변경 내용
+
+- `backend` 서비스의 build 경로를 `./spring-backend`로 변경
+- Spring Boot 컨테이너 내부 포트 `8080` 사용
+- Nginx `/api/` proxy target을 `backend:8080`으로 변경
+
+### 요청 흐름
+
+```text
+Browser
+  -> Nginx
+      -> /      -> Next.js frontend
+      -> /api   -> Spring Boot backend
+```
+
+### 확인 주소
+
+```bash
+curl http://localhost:8082/health
+curl http://localhost/api/health
+```
+
+### 예상 응답
+
+```json
+{
+  "status": "ok",
+  "service": "spring-backend"
+}
+```
