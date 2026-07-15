@@ -964,3 +964,11 @@ curl http://localhost/api/health
   "service": "spring-backend"
 }
 ```
+## Spring Boot와 PostgreSQL 연결 확인
+
+Spring Boot backend에서 PostgreSQL 컨테이너에 접속 가능한지 확인하기 위해 `/db/health` API를 추가했다.
+
+### 직접 backend 확인
+
+```bash
+curl http://localhost:8080/db/health
