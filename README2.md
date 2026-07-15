@@ -982,3 +982,34 @@ Spring Boot backend에서 PostgreSQL의 `products` 테이블을 조회하는 API
 
 ```bash
 GET /api/products
+```
+
+## Spring Boot Redis 연결
+
+Spring Boot backend에서 Redis 컨테이너에 연결하고, 간단한 캐시 저장/조회 API를 추가했다.
+
+### Redis 연결 확인
+
+```bash
+curl http://localhost/api/redis/health
+```
+
+### 추가 사항
+
+웹브라우저에서는 GET밖에 안됨. POST는 안됨
+
+
+
+## Products API Redis Cache
+
+`/api/products` API에 Redis 캐시를 추가했다.
+
+### 동작 방식
+
+```text
+첫 요청:
+Nginx -> Spring Boot -> Redis 캐시 확인 -> 없음 -> PostgreSQL 조회 -> Redis 저장 -> 응답
+
+두 번째 요청:
+Nginx -> Spring Boot -> Redis 캐시 확인 -> 있음 -> Redis 응답
+```
